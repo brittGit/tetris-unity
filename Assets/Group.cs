@@ -19,7 +19,7 @@ public class Group : MonoBehaviour {
             if (!Grid.insideBorder(v))
                 return false;
 
-            //Block in grid cell (and not part of same group)?
+            //Block in grid cell and not part of same group?
             if (Grid.grid[(int)v.x, (int)v.y] != null && 
                 Grid.grid[(int)v.x, (int)v.y].parent != transform)
                 return false;
@@ -45,7 +45,7 @@ public class Group : MonoBehaviour {
 
         //add new children to the grid
         foreach (Transform child in transform) {
-            Vector2 v = Grid.roundVect2(child.position);
+            Vector2 v = Grid.roundVec2(child.position);
             Grid.grid[(int)v.x, (int)v.y] = child;
         }
     }
@@ -110,7 +110,7 @@ public class Group : MonoBehaviour {
             transform.position += new Vector3(0, -1, 0);
 
             //See if valid
-            if (is ValidGridPos()) {
+            if (!isValidGridPos()) {
                 //Its valid. Update grid.
                 updateGrid();
             } else {
@@ -124,7 +124,7 @@ public class Group : MonoBehaviour {
                 FindObjectOfType<Spawner>().spawnNext();
 
                 //disable script
-                enable = false;
+                enabled = false;
             }   
             lastFall = Time.time;
         }
